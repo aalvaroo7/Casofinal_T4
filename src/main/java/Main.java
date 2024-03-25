@@ -29,6 +29,7 @@ public class Main {
         private JButton analyzeButton;
         private JButton searchButton;
         private JTextField searchField;
+        private JButton newWindowButton;
 
         public Editor_texto() {
 
