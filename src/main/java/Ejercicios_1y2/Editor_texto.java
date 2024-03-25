@@ -12,7 +12,7 @@ public class Editor_texto extends JFrame {
     private JTextArea textArea;
     private JButton saveButton;
 
-    public TextEditor() {
+    public Editor_texto() {
         textArea = new JTextArea();
         saveButton = new JButton("Guardar");
 
@@ -40,6 +40,6 @@ public class Editor_texto extends JFrame {
     }
 
     public static void main(String[] args) {
-        new TextEditor();
+        new Editor_texto();
     }
 }
