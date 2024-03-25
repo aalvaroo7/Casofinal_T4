@@ -20,6 +20,9 @@ public class Main {
         private JList<String> fileList;
         private DefaultListModel<String> listModel;
         private JButton analyzeButton;
+        private JButton searchButton;
+        private JTextField searchField;
+
 
         public Editor_texto() {
             compareButton = new JButton("Comparar");
@@ -70,6 +73,23 @@ public class Main {
             this.setVisible(true);
 
             refreshFileList();
+            searchField = new JTextField(20);
+            searchButton = new JButton("Buscar");
+            searchButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    searchWord();
+                }
+            });
+
+            JPanel searchPanel = new JPanel();
+            searchPanel.add(searchField);
+            searchPanel.add(searchButton);
+
+            this.add(searchPanel, BorderLayout.NORTH);
+
+
+
         }
 
         private void analyzeText() {
