@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -164,4 +165,17 @@ public class Main {
             new Editor_texto();
         }
     }
+
+    private void searchWord() {
+        String text = textArea.getText();
+        String[] words = text.split("\\s+");
+        String searchWord = searchField.getText();
+
+        long count = Arrays.stream(words)
+                .filter(word -> word.equalsIgnoreCase(searchWord))
+                .count();
+
+        JOptionPane.showMessageDialog(this, "La palabra '" + searchWord + "' aparece " + count + " veces.");
+    }
+
 }
