@@ -58,7 +58,7 @@ public class Main {
 
             this.add(new JScrollPane(contactList), BorderLayout.WEST);
             this.add(contactPanel, BorderLayout.SOUTH);
-        }
+
             compareButton = new JButton("Comparar");
             compareButton.addActionListener(e -> compareFiles());
 
@@ -203,21 +203,21 @@ public class Main {
             JOptionPane.showMessageDialog(this, "La palabra '" + searchWord + "' aparece " + count + " veces.");
         }
 
+        private void addContacto() {
+            String name = nameField.getText();
+            String email = emailField.getText();
+            String phone = phoneField.getText();
+
+            Contacto contact = new Contacto(name, email, phone);
+            contactListModel.addElement(contact);
+
+            nameField.setText("");
+            emailField.setText("");
+            phoneField.setText("");
+        }
+
         public static void main(String[] args) {
             new Editor_texto();
         }
     }
-
-private void addContact() {
-    String name = nameField.getText();
-    String email = emailField.getText();
-    String phone = phoneField.getText();
-
-    Contact contact = new Contact(name, email, phone);
-    contactListModel.addElement(contact);
-
-    nameField.setText("");
-    emailField.setText("");
-    phoneField.setText("");
-}
 }
