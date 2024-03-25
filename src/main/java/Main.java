@@ -1,39 +1,27 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class  Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
-    }
-
+public class Main {
     public static class Editor_texto extends JFrame {
         private JButton compareButton;
         private JTextArea textArea;
         private JButton saveButton;
         private JList<String> fileList;
         private DefaultListModel<String> listModel;
-
-
+        private JButton analyzeButton;
 
         public Editor_texto() {
-
             compareButton = new JButton("Comparar");
             compareButton.addActionListener(e -> compareFiles());
 
@@ -54,6 +42,14 @@ public class  Main {
                     }
                 }
             });
+            analyzeButton = new JButton("Analizar");
+            analyzeButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    analyzeText();
+                }
+            });
+            this.add(analyzeButton, BorderLayout.NORTH);
 
             fileList.addMouseListener(new MouseAdapter() {
                 @Override
@@ -76,6 +72,27 @@ public class  Main {
             refreshFileList();
         }
 
+        private void analyzeText() {
+            String text = textArea.getText();
+            String[] words = text.split("\\s+");
+            int wordCount = words.length;
+
+            Map<String, Integer> wordFrequency = new HashMap<>();
+            for (String word : words) {
+                word = word.toLowerCase();
+                wordFrequency.put(word, wordFrequency.getOrDefault(word, 0) + 1);
+            }
+
+            StringBuilder stats = new StringBuilder();
+            stats.append("Número total de palabras: ").append(wordCount).append("\n");
+            stats.append("Estadísticas de uso de palabras:\n");
+            for (Map.Entry<String, Integer> entry : wordFrequency.entrySet()) {
+                stats.append(entry.getKey()).append(": ").append(entry.getValue()).append("\n");
+            }
+
+            JOptionPane.showMessageDialog(this, stats.toString());
+        }
+
         private void loadFile(String fileName) {
             try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
                 textArea.setText(reader.lines().collect(Collectors.joining("\n")));
@@ -95,6 +112,7 @@ public class  Main {
                 e.printStackTrace();
             }
         }
+
         private void compareFiles() {
             JFileChooser fileChooser1 = new JFileChooser();
             JFileChooser fileChooser2 = new JFileChooser();
