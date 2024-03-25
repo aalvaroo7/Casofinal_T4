@@ -24,7 +24,6 @@ public class Main {
         private JButton searchButton;
         private JTextField searchField;
 
-
         public Editor_texto() {
             compareButton = new JButton("Comparar");
             compareButton.addActionListener(e -> compareFiles());
@@ -88,9 +87,6 @@ public class Main {
             searchPanel.add(searchButton);
 
             this.add(searchPanel, BorderLayout.NORTH);
-
-
-
         }
 
         private void analyzeText() {
@@ -161,21 +157,20 @@ public class Main {
             }
         }
 
+        private void searchWord() {
+            String text = textArea.getText();
+            String[] words = text.split("\\s+");
+            String searchWord = searchField.getText();
+
+            long count = Arrays.stream(words)
+                    .filter(word -> word.equalsIgnoreCase(searchWord))
+                    .count();
+
+            JOptionPane.showMessageDialog(this, "La palabra '" + searchWord + "' aparece " + count + " veces.");
+        }
+
         public static void main(String[] args) {
             new Editor_texto();
         }
     }
-
-    private void searchWord() {
-        String text = textArea.getText();
-        String[] words = text.split("\\s+");
-        String searchWord = searchField.getText();
-
-        long count = Arrays.stream(words)
-                .filter(word -> word.equalsIgnoreCase(searchWord))
-                .count();
-
-        JOptionPane.showMessageDialog(this, "La palabra '" + searchWord + "' aparece " + count + " veces.");
-    }
-
 }
