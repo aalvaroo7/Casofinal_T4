@@ -9,7 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
-
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 public class Editor_texto extends JFrame {
     private JTextArea textArea;
     private JButton saveButton;
@@ -75,7 +81,11 @@ public class Editor_texto extends JFrame {
             e.printStackTrace();
         }
     }
+    compareButton = new JButton("Comparar");
+        compareButton.addActionListener(e -> compareFiles());
 
+        this.add(compareButton, BorderLayout.NORTH);
+}
     public static void main(String[] args) {
         new Editor_texto();
     }
