@@ -15,6 +15,12 @@ import java.util.stream.Collectors;
 
 public class Main {
     public static class Editor_texto extends JFrame {
+        private JList<Contacto> contactList;
+        private DefaultListModel<Contacto> contactListModel;
+        private JTextField nameField;
+        private JTextField emailField;
+        private JTextField phoneField;
+        private JButton addContactButton;
         private JButton compareButton;
         private JTextArea textArea;
         private JButton saveButton;
@@ -25,6 +31,34 @@ public class Main {
         private JTextField searchField;
 
         public Editor_texto() {
+
+            contactListModel = new DefaultListModel<>();
+            contactList = new JList<>(contactListModel);
+
+            nameField = new JTextField(20);
+            emailField = new JTextField(20);
+            phoneField = new JTextField(20);
+
+            addContactButton = new JButton("Agregar contacto");
+            addContactButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    addContacto();
+                }
+            });
+
+            JPanel contactPanel = new JPanel();
+            contactPanel.add(new JLabel("Nombre:"));
+            contactPanel.add(nameField);
+            contactPanel.add(new JLabel("Email:"));
+            contactPanel.add(emailField);
+            contactPanel.add(new JLabel("Teléfono:"));
+            contactPanel.add(phoneField);
+            contactPanel.add(addContactButton);
+
+            this.add(new JScrollPane(contactList), BorderLayout.WEST);
+            this.add(contactPanel, BorderLayout.SOUTH);
+        }
             compareButton = new JButton("Comparar");
             compareButton.addActionListener(e -> compareFiles());
 
@@ -173,4 +207,17 @@ public class Main {
             new Editor_texto();
         }
     }
+
+private void addContact() {
+    String name = nameField.getText();
+    String email = emailField.getText();
+    String phone = phoneField.getText();
+
+    Contact contact = new Contact(name, email, phone);
+    contactListModel.addElement(contact);
+
+    nameField.setText("");
+    emailField.setText("");
+    phoneField.setText("");
+}
 }
