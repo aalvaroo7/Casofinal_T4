@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,9 +19,24 @@ public class Editortexto extends JFrame {
     private JButton countWordsButton;
     private JButton listFilesButton;
     private JButton searchWordButton;
+    private JLabel mousePositionLabel; // Etiqueta para mostrar la posición del ratón
+
 
     public Editortexto() {
+        mousePositionLabel = new JLabel();
+        this.add(mousePositionLabel, BorderLayout.SOUTH);
         this.setLayout(new BorderLayout());
+
+        textArea.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                mousePositionLabel.setText("Posición del ratón: " + e.getX() + ", " + e.getY());
+            }
+        });
+
+        this.setSize(500, 500);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
 
         textArea = new JTextArea();
         this.add(new JScrollPane(textArea), BorderLayout.CENTER);

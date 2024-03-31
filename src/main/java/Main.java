@@ -26,7 +26,7 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             final int windowNumber = i + 1;
             SwingUtilities.invokeLater(() -> {
-                Editortexto editor = new Editortexto();
+                Editortexto editor = new Editortexto(); // Crear una nueva instancia de Editortexto
                 JFrame frame = new JFrame("Editor de Texto " + windowNumber);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().add(editor);
