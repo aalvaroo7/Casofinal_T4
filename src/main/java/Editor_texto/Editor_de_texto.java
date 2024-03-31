@@ -16,6 +16,7 @@ public class Editor_de_texto extends JFrame {
     private JButton compareButton;
     private JButton countWordsButton;
     private JButton listFilesButton;
+    private JButton searchWordButton;
 
     public Editor_de_texto() {
         this.setLayout(new BorderLayout());
@@ -64,6 +65,18 @@ public class Editor_de_texto extends JFrame {
             }
         });
         this.add(listFilesButton, BorderLayout.NORTH);
+
+        searchWordButton = new JButton("Buscar palabra");
+        searchWordButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String file = JOptionPane.showInputDialog("Ingrese la ruta del archivo");
+                String word = JOptionPane.showInputDialog("Ingrese la palabra a buscar");
+                int wordCount = searchWordInFile(file, word);
+                JOptionPane.showMessageDialog(null, "La palabra '" + word + "' aparece " + wordCount + " veces en el archivo");
+            }
+        });
+        this.add(searchWordButton, BorderLayout.NORTH);
 
         this.setSize(500, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -149,5 +162,28 @@ public class Editor_de_texto extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public int searchWordInFile(String file, String word) {
+        int wordCount = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = reader.readLine();
+
+            while (line != null) {
+                String[] words = line.split("\\s+");
+                for (String w : words) {
+                    if (w.equals(word)) {
+                        wordCount++;
+                    }
+                }
+                line = reader.readLine();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return wordCount;
     }
 }
