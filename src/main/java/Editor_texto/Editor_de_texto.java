@@ -5,12 +5,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
 public class Editor_de_texto extends JFrame {
     private JTextArea textArea;
     private JButton saveButton;
     private JButton compareButton;
     private JButton countWordsButton;
+    private JButton listFilesButton;
 
     public Editor_de_texto() {
         this.setLayout(new BorderLayout());
@@ -49,6 +54,16 @@ public class Editor_de_texto extends JFrame {
             }
         });
         this.add(countWordsButton, BorderLayout.EAST);
+
+        listFilesButton = new JButton("Listar documentos");
+        listFilesButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String directory = JOptionPane.showInputDialog("Ingrese la ruta del directorio");
+                listFiles(directory);
+            }
+        });
+        this.add(listFilesButton, BorderLayout.NORTH);
 
         this.setSize(500, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -103,5 +118,36 @@ public class Editor_de_texto extends JFrame {
         }
 
         return wordCount;
+    }
+
+    public void listFiles(String directory) {
+        try (Stream<Path> paths = Files.walk(Paths.get(directory))) {
+            paths.filter(Files::isRegularFile)
+                    .forEach(file -> {
+                        int response = JOptionPane.showConfirmDialog(null, "¿Desea abrir el archivo " + file.getFileName() + "?", "Seleccione una opción", JOptionPane.YES_NO_OPTION);
+                        if (response == JOptionPane.YES_OPTION) {
+                            openFile(file.toString());
+                        }
+                    });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openFile(String file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line = reader.readLine();
+            StringBuilder content = new StringBuilder();
+
+            while (line != null) {
+                content.append(line).append("\n");
+                line = reader.readLine();
+            }
+
+            textArea.setText(content.toString());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
