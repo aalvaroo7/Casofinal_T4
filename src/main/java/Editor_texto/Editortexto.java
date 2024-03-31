@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class Editor_de_texto extends JFrame {
+public class Editortexto extends JFrame {
     private JTextArea textArea;
     private JButton saveButton;
     private JButton compareButton;
@@ -18,7 +18,7 @@ public class Editor_de_texto extends JFrame {
     private JButton listFilesButton;
     private JButton searchWordButton;
 
-    public Editor_de_texto() {
+    public Editortexto() {
         this.setLayout(new BorderLayout());
 
         textArea = new JTextArea();
