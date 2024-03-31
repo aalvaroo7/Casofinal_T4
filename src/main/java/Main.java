@@ -24,9 +24,10 @@ public class Main {
 
         // Crear varias ventanas
         for (int i = 0; i < 3; i++) {
+            final int windowNumber = i + 1;
             SwingUtilities.invokeLater(() -> {
                 Editortexto editor = new Editortexto();
-                JFrame frame = new JFrame("Editor de Texto " + (i + 1));
+                JFrame frame = new JFrame("Editor de Texto " + windowNumber);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.getContentPane().add(editor);
                 frame.pack();
