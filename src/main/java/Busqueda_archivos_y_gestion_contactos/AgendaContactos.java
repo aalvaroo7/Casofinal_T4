@@ -34,4 +34,9 @@ public class AgendaContactos {
         }
         return nombres;
     }
+
+    // Método para obtener la lista de contactos
+    public List<Contacto> getContactos() {
+        return this.contactos;
+    }
 }
