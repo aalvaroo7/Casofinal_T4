@@ -16,10 +16,13 @@ public class Main {
 
         AgendaContactos agenda = new AgendaContactos();
 
+        Color backgroundColor = new Color(238, 238, 238); // Color de fondo del panel
+
         JButton registrarContactoButton = new JButton("Registrar Contacto");
         registrarContactoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         registrarContactoButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
         registrarContactoButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centra el botón
+        registrarContactoButton.setBackground(backgroundColor); // Establece el color de fondo del botón
         registrarContactoButton.addActionListener(e -> {
             String nombre = JOptionPane.showInputDialog("Ingrese el nombre del contacto");
             String correo = JOptionPane.showInputDialog("Ingrese el correo del contacto");
@@ -33,6 +36,7 @@ public class Main {
         verContactosButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         verContactosButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
         verContactosButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centra el botón
+        verContactosButton.setBackground(backgroundColor); // Establece el color de fondo del botón
         verContactosButton.addActionListener(e -> {
             StringBuilder contactos = new StringBuilder();
             for (Contacto contacto : agenda.getContactos()) {
@@ -47,6 +51,7 @@ public class Main {
         abrirEditorTextoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         abrirEditorTextoButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
         abrirEditorTextoButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centra el botón
+        abrirEditorTextoButton.setBackground(backgroundColor); // Establece el color de fondo del botón
         abrirEditorTextoButton.addActionListener(e -> {
             new EditorTextoInteractivo();
         });
@@ -55,6 +60,7 @@ public class Main {
         buscarArchivoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         buscarArchivoButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
         buscarArchivoButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centra el botón
+        buscarArchivoButton.setBackground(backgroundColor); // Establece el color de fondo del botón
         buscarArchivoButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
