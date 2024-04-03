@@ -25,4 +25,13 @@ public class AgendaContactos {
         }
         return null;
     }
+
+    // Método para obtener los nombres de todos los contactos
+    public List<String> getNombresContactos() {
+        List<String> nombres = new ArrayList<>();
+        for (Contacto contacto : this.contactos) {
+            nombres.add(contacto.getNombre());
+        }
+        return nombres;
+    }
 }
