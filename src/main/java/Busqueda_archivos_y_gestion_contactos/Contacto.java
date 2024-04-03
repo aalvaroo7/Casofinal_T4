@@ -1,5 +1,8 @@
-package contactos;
+package Busqueda_archivos_y_gestion_contactos;
 
+
+import java.util.ArrayList;
+import java.util.List;
 public class Contacto {
     private String nombre;
     private String correoElectronico;
@@ -10,6 +13,8 @@ public class Contacto {
         this.correoElectronico = correoElectronico;
         this.numeroTelefono = numeroTelefono;
     }
+
+    // Getters y setters para los campos
 
     public String getNombre() {
         return nombre;

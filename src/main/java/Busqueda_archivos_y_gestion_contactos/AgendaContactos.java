@@ -1,23 +1,24 @@
-package contactos;
+package Busqueda_archivos_y_gestion_contactos;
 import java.util.ArrayList;
+import java.util.List;
 
-public class Gestorcontactos {
-    private ArrayList<Contacto> contactos;
+public class AgendaContactos {
+    private List<Contacto> contactos;
 
-    public Gestorcontactos() {
-        contactos = new ArrayList<>();
+    public AgendaContactos() {
+        this.contactos = new ArrayList<>();
     }
 
     public void agregarContacto(Contacto contacto) {
-        contactos.add(contacto);
+        this.contactos.add(contacto);
     }
 
     public void eliminarContacto(Contacto contacto) {
-        contactos.remove(contacto);
+        this.contactos.remove(contacto);
     }
 
     public Contacto buscarContactoPorNombre(String nombre) {
-        for (Contacto contacto : contactos) {
+        for (Contacto contacto : this.contactos) {
             if (contacto.getNombre().equals(nombre)) {
                 return contacto;
             }
