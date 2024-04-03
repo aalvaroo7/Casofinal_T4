@@ -68,7 +68,7 @@ public class Main {
             }
         });
 
-        ImageIcon logoIcon = new ImageIcon(new ImageIcon("C:/Captura de pantalla 2024-04-03 182800.png").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT));
+        ImageIcon logoIcon = new ImageIcon(new ImageIcon("C:/maxresdefault.jpg").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT));
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
