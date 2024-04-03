@@ -12,6 +12,7 @@ public class Main {
         JFrame frame = new JFrame("Menu Principal");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500, 400); // Aumenta el tamaño del marco
+        frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
         AgendaContactos agenda = new AgendaContactos();
 
