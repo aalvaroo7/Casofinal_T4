@@ -55,20 +55,19 @@ public class Main {
             }
         });
 
-        JPanel panel = new JPanel();
+        ImageIcon logoIcon = new ImageIcon(new ImageIcon("C:/Captura de pantalla 2024-04-03 182800.png").getImage().getScaledInstance(300, 200, Image.SCALE_DEFAULT));
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(logoIcon.getImage(), 0, 0, this);
+            }
+        };
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(registrarContactoButton);
         panel.add(verContactosButton);
         panel.add(abrirEditorTextoButton);
         panel.add(buscarArchivoButton);
-
-        // 1. Crea un objeto ImageIcon con la ruta del archivo de imagen.
-        ImageIcon logoIcon = new ImageIcon("C:/Captura de pantalla 2024-04-03 182800.png"); // Reemplaza "ruta/al/logo.png" con la ruta real al archivo de imagen del logo
-
-        // 2. Crea un objeto JLabel y pasa el objeto ImageIcon al constructor.
-        JLabel logoLabel = new JLabel(logoIcon);
-
-        // 3. Añade el JLabel a tu panel.
-        panel.add(logoLabel);
 
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
