@@ -2,6 +2,7 @@ import Editor_texto.EditorTextoInteractivo;
 import Busqueda_archivos_y_gestion_contactos.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,9 +15,38 @@ public class Main {
         frame.setSize(500, 400); // Aumenta el tamaño del marco
         frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
 
+        // Etiquetas para mostrar la posición del ratón
+        JLabel mouseXLabel = new JLabel("X: ");
+        JLabel mouseYLabel = new JLabel("Y: ");
+
+        // Agregar un MouseMotionListener para actualizar las etiquetas con la posición del ratón
+        frame.addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(java.awt.event.MouseEvent e) {
+                mouseXLabel.setText("X: " + e.getX());
+                mouseYLabel.setText("Y: " + e.getY());
+            }
+        });
+
         AgendaContactos agenda = new AgendaContactos();
 
         Color backgroundColor = new Color(238, 238, 238); // Color de fondo del panel
+
+        // Resto del código...
+        // Asegúrate de agregar las etiquetas a tu panel o marco
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(new ImageIcon(new ImageIcon("C:/maxresdefault.jpg").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT)).getImage(), 0, 0, this);
+            }
+        };
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(mouseXLabel);
+        panel.add(mouseYLabel);
+
+        frame.getContentPane().add(panel, BorderLayout.CENTER);
+        frame.setVisible(true);
 
         JButton registrarContactoButton = new JButton("Registrar Contacto");
         registrarContactoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
@@ -76,13 +106,6 @@ public class Main {
         });
 
         ImageIcon logoIcon = new ImageIcon(new ImageIcon("C:/maxresdefault.jpg").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT));
-        JPanel panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(logoIcon.getImage(), 0, 0, this);
-            }
-        };
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(registrarContactoButton);
         panel.add(verContactosButton);
@@ -92,4 +115,4 @@ public class Main {
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
-}
+    }

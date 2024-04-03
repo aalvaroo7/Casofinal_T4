@@ -12,7 +12,8 @@ public class EditorTextoInteractivo extends JFrame {
         this.setLayout(new BorderLayout());
 
         textArea = new JTextArea();
-        this.add(new JScrollPane(textArea), BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(textArea); // Envuelve textArea en un JScrollPane
+        this.add(scrollPane, BorderLayout.CENTER); // Agrega el JScrollPane en lugar de textArea
 
         saveButton = new JButton("Guardar");
         saveButton.addActionListener(new ActionListener() {
