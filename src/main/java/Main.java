@@ -5,16 +5,18 @@ import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import javax.swing.border.EmptyBorder;
 
 public class Main {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Menu Principal");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
+        frame.setSize(500, 400); // Aumenta el tamaño del marco
 
         AgendaContactos agenda = new AgendaContactos();
 
         JButton registrarContactoButton = new JButton("Registrar Contacto");
+        registrarContactoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         registrarContactoButton.addActionListener(e -> {
             String nombre = JOptionPane.showInputDialog("Ingrese el nombre del contacto");
             String correo = JOptionPane.showInputDialog("Ingrese el correo del contacto");
@@ -25,6 +27,7 @@ public class Main {
         });
 
         JButton verContactosButton = new JButton("Ver Contactos Registrados");
+        verContactosButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         verContactosButton.addActionListener(e -> {
             StringBuilder contactos = new StringBuilder();
             for (Contacto contacto : agenda.getContactos()) {
@@ -36,11 +39,13 @@ public class Main {
         });
 
         JButton abrirEditorTextoButton = new JButton("Abrir Editor de Texto");
+        abrirEditorTextoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         abrirEditorTextoButton.addActionListener(e -> {
             new EditorTextoInteractivo();
         });
 
         JButton buscarArchivoButton = new JButton("Buscar en Archivo");
+        buscarArchivoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         buscarArchivoButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
@@ -55,7 +60,7 @@ public class Main {
             }
         });
 
-        ImageIcon logoIcon = new ImageIcon(new ImageIcon("C:/Captura de pantalla 2024-04-03 182800.png").getImage().getScaledInstance(300, 200, Image.SCALE_DEFAULT));
+        ImageIcon logoIcon = new ImageIcon(new ImageIcon("C:/Captura de pantalla 2024-04-03 182800.png").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT));
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
