@@ -17,6 +17,8 @@ public class Main {
 
         JButton registrarContactoButton = new JButton("Registrar Contacto");
         registrarContactoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
+        registrarContactoButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
+        registrarContactoButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centra el botón
         registrarContactoButton.addActionListener(e -> {
             String nombre = JOptionPane.showInputDialog("Ingrese el nombre del contacto");
             String correo = JOptionPane.showInputDialog("Ingrese el correo del contacto");
@@ -28,6 +30,8 @@ public class Main {
 
         JButton verContactosButton = new JButton("Ver Contactos Registrados");
         verContactosButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
+        verContactosButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
+        verContactosButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centra el botón
         verContactosButton.addActionListener(e -> {
             StringBuilder contactos = new StringBuilder();
             for (Contacto contacto : agenda.getContactos()) {
@@ -40,12 +44,16 @@ public class Main {
 
         JButton abrirEditorTextoButton = new JButton("Abrir Editor de Texto");
         abrirEditorTextoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
+        abrirEditorTextoButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
+        abrirEditorTextoButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centra el botón
         abrirEditorTextoButton.addActionListener(e -> {
             new EditorTextoInteractivo();
         });
 
         JButton buscarArchivoButton = new JButton("Buscar en Archivo");
         buscarArchivoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
+        buscarArchivoButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
+        buscarArchivoButton.setAlignmentX(Component.CENTER_ALIGNMENT); // Centra el botón
         buscarArchivoButton.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
