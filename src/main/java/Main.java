@@ -32,22 +32,6 @@ public class Main {
 
         Color backgroundColor = new Color(238, 238, 238); // Color de fondo del panel
 
-        // Resto del código...
-        // Asegúrate de agregar las etiquetas a tu panel o marco
-        JPanel panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(new ImageIcon(new ImageIcon("C:/maxresdefault.jpg").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT)).getImage(), 0, 0, this);
-            }
-        };
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(mouseXLabel);
-        panel.add(mouseYLabel);
-
-        frame.getContentPane().add(panel, BorderLayout.CENTER);
-        frame.setVisible(true);
-
         JButton registrarContactoButton = new JButton("Registrar Contacto");
         registrarContactoButton.setBorder(new EmptyBorder(5, 5, 5, 5)); // Reduce el grosor del borde
         registrarContactoButton.setFont(new Font("Arial", Font.BOLD, 14)); // Aumenta el tamaño del texto
@@ -106,13 +90,20 @@ public class Main {
         });
 
         ImageIcon logoIcon = new ImageIcon(new ImageIcon("C:/maxresdefault.jpg").getImage().getScaledInstance(500, 400, Image.SCALE_DEFAULT));
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(registrarContactoButton);
-        panel.add(verContactosButton);
-        panel.add(abrirEditorTextoButton);
-        panel.add(buscarArchivoButton);
+        JPanel panel = new JPanel(new GridBagLayout()); // Cambia a GridBagLayout
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weighty = 1;
+
+        panel.add(mouseXLabel, gbc);
+        panel.add(mouseYLabel, gbc);
+        panel.add(registrarContactoButton, gbc);
+        panel.add(verContactosButton, gbc);
+        panel.add(abrirEditorTextoButton, gbc);
+        panel.add(buscarArchivoButton, gbc);
 
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
-    }
+}
