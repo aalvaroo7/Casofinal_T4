@@ -1,8 +1,12 @@
 import Editor_texto.EditorTextoInteractivo;
 import Busqueda_archivos_y_gestion_contactos.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -105,5 +109,50 @@ public class Main {
 
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
+
+
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setSize(500, 400); // Aumenta el tamaño del marco
+            frame.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+            // Agregar un MouseMotionListener para actualizar las etiquetas con la posición del ratón
+            frame.addMouseMotionListener(new MouseMotionAdapter() {
+                @Override
+                public void mouseMoved(java.awt.event.MouseEvent e) {
+                    mouseXLabel.setText("X: " + e.getX());
+                    mouseYLabel.setText("Y: " + e.getY());
+                }
+            });
+            // Crear los botones y agregarlos a un panel
+            JPanel optionsPanel = new JPanel(new GridBagLayout());
+
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.weighty = 1;
+
+            optionsPanel.add(mouseXLabel, gbc);
+            optionsPanel.add(mouseYLabel, gbc);
+            // Agrega los botones al panel de opciones aquí...
+
+            // Crear el panel de la imagen
+            JPanel imagePanel = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    try {
+                        BufferedImage image = ImageIO.read(new File("C:/maxresdefault.jpg"));
+                        g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+
+            // Crear el panel principal y agregar los subpaneles
+            JPanel mainPanel = new JPanel(new BorderLayout());
+            mainPanel.add(imagePanel, BorderLayout.WEST);
+            mainPanel.add(optionsPanel, BorderLayout.EAST);
+
+            frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
+            frame.setVisible(true);
+        }
     }
-}
