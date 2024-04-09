@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import static Validacion_email.Validador_email.EMAIL_PATTERN;
 
 public class Main {
     public static void main(String[] args) {
@@ -47,9 +51,15 @@ public class Main {
             String nombre = JOptionPane.showInputDialog("Ingrese el nombre del contacto");
             String correo = JOptionPane.showInputDialog("Ingrese el correo del contacto");
             String telefono = JOptionPane.showInputDialog("Ingrese el teléfono del contacto");
-            Contacto contacto = new Contacto(nombre, correo, telefono);
-            agenda.agregarContacto(contacto);
-            JOptionPane.showMessageDialog(null, "Contacto registrado exitosamente");
+
+            // Validar el correo electrónico antes de crear el contacto
+            if (EMAIL_PATTERN.matcher(correo).matches()) {
+                Contacto contacto = new Contacto(nombre, correo, telefono);
+                agenda.agregarContacto(contacto);
+                JOptionPane.showMessageDialog(null, "Contacto registrado exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "Correo electrónico inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
         optionsPanel.add(registrarContactoButton, gbc);
 
@@ -65,6 +75,56 @@ public class Main {
             JOptionPane.showMessageDialog(null, contactos.toString());
         });
         optionsPanel.add(verContactosButton, gbc);
+
+        // Etiqueta para mostrar si el correo electrónico es válido o no
+        JLabel emailValidationLabel = new JLabel();
+        optionsPanel.add(emailValidationLabel, gbc);
+
+        emailField.getDocument().addDocumentListener(new DocumentListener() {
+            void validate() {
+                String email = emailField.getText();
+                if (EMAIL_PATTERN.matcher(email).matches()) {
+                    emailValidationLabel.setText("Correo electrónico válido");
+                    emailValidationLabel.setForeground(Color.GREEN);
+                } else {
+                    emailValidationLabel.setText("Correo electrónico inválido");
+                    emailValidationLabel.setForeground(Color.RED);
+                }
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                validate();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                validate();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                validate();
+            }
+        });
+
+        // Botón para registrar un contacto
+        JButton registrarContactoButton = new JButton("Registrar Contacto");
+        registrarContactoButton.addActionListener(e -> {
+            String nombre = JOptionPane.showInputDialog("Ingrese el nombre del contacto");
+            String correo = emailField.getText(); // Usa el texto del campo de correo electrónico
+            String telefono = JOptionPane.showInputDialog("Ingrese el teléfono del contacto");
+
+            // Validar el correo electrónico antes de crear el contacto
+            if (EMAIL_PATTERN.matcher(correo).matches()) {
+                Contacto contacto = new Contacto(nombre, correo, telefono);
+                agenda.agregarContacto(contacto);
+                JOptionPane.showMessageDialog(null, "Contacto registrado exitosamente");
+            } else {
+                JOptionPane.showMessageDialog(null, "Correo electrónico inválido", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
+        optionsPanel.add(registrarContactoButton, gbc);
 
         // Botón para abrir el editor de texto
         JButton abrirEditorTextoButton = new JButton("Abrir Editor de Texto");
