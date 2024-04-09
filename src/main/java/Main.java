@@ -31,8 +31,6 @@ public class Main {
 
         AgendaContactos agenda = new AgendaContactos();
 
-        Color backgroundColor = new Color(238, 238, 238); // Color de fondo del panel
-
         // Crear los botones y agregarlos a un panel
         JPanel optionsPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -101,9 +99,13 @@ public class Main {
         uaxPanel.add(uaxLabel);
 
         // Crear el panel principal y agregar los subpaneles
-        JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.add(uaxPanel, BorderLayout.WEST);
-        mainPanel.add(optionsPanel, BorderLayout.EAST);
+        JPanel mainPanel = new JPanel(new GridLayout(1, 2)); // Cambia a GridLayout
+        mainPanel.add(uaxPanel);
+        mainPanel.add(optionsPanel);
+
+        // Establecer diferentes colores de fondo para cada panel
+        uaxPanel.setBackground(Color.BLUE);
+        optionsPanel.setBackground(Color.CYAN); // Más claro que el azul
 
         frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
