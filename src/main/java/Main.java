@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import static Validacion_email.Validador_email.EMAIL_PATTERN;
 
@@ -92,53 +90,14 @@ public class Main {
 
         AgendaContactos agenda = new AgendaContactos();
 
-        // Campo de texto para ingresar el correo electrónico
-        JTextField emailField = new JTextField();
-        optionsPanel.add(emailField, gbc);
-
         // Botón para registrar un contacto
         JButton registrarContactoButton = new JButton("Registrar Contacto");
         registrarContactoButton.addActionListener(e -> {
             String nombre = JOptionPane.showInputDialog("Ingrese el nombre del contacto");
             String telefono = JOptionPane.showInputDialog("Ingrese el teléfono del contacto");
-
-            // Campo de texto para ingresar el correo electrónico
-            JOptionPane emailOptionPane = new JOptionPane(emailField, JOptionPane.QUESTION_MESSAGE, JOptionPane.OK_CANCEL_OPTION) {
-                @Override
-                public void selectInitialValue() {
-                    emailField.requestFocusInWindow();
-                }
-            };
-            JDialog emailDialog = emailOptionPane.createDialog("Ingrese el correo electrónico");
-            emailField.getDocument().addDocumentListener(new DocumentListener() {
-                void validate() {
-                    String email = emailField.getText();
-                    if (EMAIL_PATTERN.matcher(email).matches()) {
-                        emailDialog.setTitle("Correo electrónico válido");
-                    } else {
-                        emailDialog.setTitle("Correo electrónico inválido");
-                    }
-                }
-
-                @Override
-                public void insertUpdate(DocumentEvent e) {
-                    validate();
-                }
-
-
-                public void removeUpdate(DocumentEvent e) {
-                    validate();
-                }
-
-
-                public void changedUpdate(DocumentEvent e) {
-                    validate();
-                }
-            });
-            emailDialog.setVisible(true);
+            String correo = JOptionPane.showInputDialog("Ingrese el correo electrónico del contacto");
 
             // Validar el correo electrónico antes de crear el contacto
-            String correo = emailField.getText();
             if (EMAIL_PATTERN.matcher(correo).matches()) {
                 Contacto contacto = new Contacto(nombre, correo, telefono);
                 agenda.agregarContacto(contacto);
@@ -148,6 +107,7 @@ public class Main {
             }
         });
         optionsPanel.add(registrarContactoButton, gbc);
+
         // Botón para ver contactos registrados
         JButton verContactosButton = new JButton("Ver Contactos Registrados");
         verContactosButton.addActionListener(e -> {
@@ -200,7 +160,7 @@ public class Main {
 
         // Establecer diferentes colores de fondo para cada panel
         uaxPanel.setBackground(Color.BLUE);
-        optionsPanel.setBackground(Color.lightGray); // Más claro que el azul <-- JAJAJ se quedo cyan pero el cian quedaba fatal asiq fuera
+        optionsPanel.setBackground(Color.lightGray); // Más claro que el azul
 
         frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
