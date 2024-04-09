@@ -1,6 +1,5 @@
 import Editor_texto.EditorTextoInteractivo;
 import Busqueda_archivos_y_gestion_contactos.*;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -10,8 +9,8 @@ import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import javax.swing.border.EmptyBorder;
+import java.util.List; // Correct import
+import java.util.ArrayList; // Correct import
 
 import static Validacion_email.Validador_email.EMAIL_PATTERN;
 
@@ -40,7 +39,7 @@ public class Main {
         JButton abrirHerramientaDibujoButton = new JButton("Abrir Herramienta de Dibujo");
         abrirHerramientaDibujoButton.addActionListener(e -> {
             JFrame drawingFrame = new JFrame("Herramienta de Dibujo") {
-                List<Line2D> lines = new ArrayList<>();
+                List<Line2D.Double> lines = new ArrayList<>(); // Use Line2D.Double
                 Point pointStart = null;
 
                 {
@@ -51,7 +50,7 @@ public class Main {
 
                         public void mouseReleased(MouseEvent e) {
                             Point pointEnd = e.getPoint();
-                            lines.add(new Line2D.Double(pointStart, pointEnd));
+                            lines.add(new Line2D.Double(pointStart.x, pointStart.y, pointEnd.x, pointEnd.y)); // Use Line2D.Double
                             pointStart = null;
                             repaint();
                         }
@@ -61,7 +60,7 @@ public class Main {
                         public void mouseDragged(MouseEvent e) {
                             if (pointStart != null) {
                                 Point pointEnd = e.getPoint();
-                                lines.add(new Line2D.Double(pointStart, pointEnd));
+                                lines.add(new Line2D.Double(pointStart.x, pointStart.y, pointEnd.x, pointEnd.y)); // Use Line2D.Double
                                 pointStart = pointEnd;
                                 repaint();
                             }
@@ -73,7 +72,7 @@ public class Main {
                     super.paint(g);
                     Graphics2D g2d = (Graphics2D) g;
                     g2d.setColor(Color.RED);
-                    for (Line2D line : lines) {
+                    for (Line2D.Double line : lines) {
                         g2d.draw(line);
                     }
                 }
@@ -84,6 +83,7 @@ public class Main {
             drawingFrame.setVisible(true);
         });
         optionsPanel.add(abrirHerramientaDibujoButton, gbc);
+
 
         // Agregar un MouseMotionListener para actualizar las etiquetas con la posición del ratón
         frame.addMouseMotionListener(new MouseMotionAdapter() {
