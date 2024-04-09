@@ -3,6 +3,8 @@ import Busqueda_archivos_y_gestion_contactos.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,6 +26,61 @@ public class Main {
         JLabel mouseXLabel = new JLabel("X: ");
         JLabel mouseYLabel = new JLabel("Y: ");
 
+        // Crear los botones y agregarlos a un panel
+        JPanel optionsPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weighty = 1;
+
+        optionsPanel.add(mouseXLabel, gbc);
+        optionsPanel.add(mouseYLabel, gbc);
+
+        // Botón para abrir la herramienta de dibujo
+        JButton abrirHerramientaDibujoButton = new JButton("Abrir Herramienta de Dibujo");
+        abrirHerramientaDibujoButton.addActionListener(e -> {
+            JFrame drawingFrame = new JFrame("Herramienta de Dibujo");
+            drawingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            drawingFrame.setSize(500, 500);
+
+            JPanel drawingPanel = new JPanel() {
+                Point pointStart = null;
+                Point pointEnd = null;
+                {
+                    addMouseListener(new MouseAdapter() {
+                        public void mousePressed(MouseEvent e) {
+                            pointStart = e.getPoint();
+                        }
+
+                        public void mouseReleased(MouseEvent e) {
+                            pointStart = null;
+                        }
+                    });
+                    addMouseMotionListener(new MouseMotionAdapter() {
+                        public void mouseMoved(MouseEvent e) {
+                            pointEnd = e.getPoint();
+                        }
+
+                        public void mouseDragged(MouseEvent e) {
+                            pointEnd = e.getPoint();
+                            repaint();
+                        }
+                    });
+                }
+                public void paint(Graphics g) {
+                    super.paint(g);
+                    if (pointStart != null) {
+                        g.setColor(Color.RED);
+                        g.drawLine(pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
+                    }
+                }
+            };
+
+            drawingFrame.add(drawingPanel);
+            drawingFrame.setVisible(true);
+        });
+        optionsPanel.add(abrirHerramientaDibujoButton, gbc);
+
         // Agregar un MouseMotionListener para actualizar las etiquetas con la posición del ratón
         frame.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
@@ -34,16 +91,6 @@ public class Main {
         });
 
         AgendaContactos agenda = new AgendaContactos();
-
-        // Crear los botones y agregarlos a un panel
-        JPanel optionsPanel = new JPanel(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weighty = 1;
-
-        optionsPanel.add(mouseXLabel, gbc);
-        optionsPanel.add(mouseYLabel, gbc);
 
         // Campo de texto para ingresar el correo electrónico
         JTextField emailField = new JTextField();
