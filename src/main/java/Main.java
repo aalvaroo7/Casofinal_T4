@@ -6,9 +6,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.awt.geom.Line2D;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import javax.swing.border.EmptyBorder;
 
 import static Validacion_email.Validador_email.EMAIL_PATTERN;
@@ -37,13 +39,10 @@ public class Main {
         // Botón para abrir la herramienta de dibujo
         JButton abrirHerramientaDibujoButton = new JButton("Abrir Herramienta de Dibujo");
         abrirHerramientaDibujoButton.addActionListener(e -> {
-            JFrame drawingFrame = new JFrame("Herramienta de Dibujo");
-            drawingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            drawingFrame.setSize(500, 500);
-
-            JPanel drawingPanel = new JPanel() {
+            JFrame drawingFrame = new JFrame("Herramienta de Dibujo") {
+                List<Line2D> lines = new ArrayList<>();
                 Point pointStart = null;
-                Point pointEnd = null;
+
                 {
                     addMouseListener(new MouseAdapter() {
                         public void mousePressed(MouseEvent e) {
@@ -51,30 +50,37 @@ public class Main {
                         }
 
                         public void mouseReleased(MouseEvent e) {
+                            Point pointEnd = e.getPoint();
+                            lines.add(new Line2D.Double(pointStart, pointEnd));
                             pointStart = null;
-                        }
-                    });
-                    addMouseMotionListener(new MouseMotionAdapter() {
-                        public void mouseMoved(MouseEvent e) {
-                            pointEnd = e.getPoint();
-                        }
-
-                        public void mouseDragged(MouseEvent e) {
-                            pointEnd = e.getPoint();
                             repaint();
                         }
                     });
+
+                    addMouseMotionListener(new MouseMotionAdapter() {
+                        public void mouseDragged(MouseEvent e) {
+                            if (pointStart != null) {
+                                Point pointEnd = e.getPoint();
+                                lines.add(new Line2D.Double(pointStart, pointEnd));
+                                pointStart = pointEnd;
+                                repaint();
+                            }
+                        }
+                    });
                 }
+
                 public void paint(Graphics g) {
                     super.paint(g);
-                    if (pointStart != null) {
-                        g.setColor(Color.RED);
-                        g.drawLine(pointStart.x, pointStart.y, pointEnd.x, pointEnd.y);
+                    Graphics2D g2d = (Graphics2D) g;
+                    g2d.setColor(Color.RED);
+                    for (Line2D line : lines) {
+                        g2d.draw(line);
                     }
                 }
             };
 
-            drawingFrame.add(drawingPanel);
+            drawingFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            drawingFrame.setSize(500, 500);
             drawingFrame.setVisible(true);
         });
         optionsPanel.add(abrirHerramientaDibujoButton, gbc);
