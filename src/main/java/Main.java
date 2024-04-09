@@ -153,7 +153,7 @@ public class Main {
 
         // Establecer diferentes colores de fondo para cada panel
         uaxPanel.setBackground(Color.BLUE);
-        optionsPanel.setBackground(Color.lightGray); // Más claro que el azul
+        optionsPanel.setBackground(Color.lightGray); // Más claro que el azul <-- JAJAJ se quedo cyan pero el cian quedaba fatal asiq fuera
 
         frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
